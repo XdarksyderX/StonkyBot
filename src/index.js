@@ -45,4 +45,4 @@ client.on("message", async (message) => {
       break;
   }
 });
-client.login(process.env.API);
+client.login('ODI3OTg4NjY4NTc2NDMyMTU4.YGjCiQ.4hd_LuORcRvrW4av-MvN_kYVyNo');
