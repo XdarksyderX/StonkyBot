@@ -1,24 +1,15 @@
-if (process.env.NODE_ENV === 'development')
-    require('dotenv').config();
+require("dotenv").config();
 
 const Discord = require("discord.js");
 const client = new Discord.Client({
   intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES],
 });
 
-const sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./TheBotStonks.db', (err) => {
-  if (err) {
-    return console.error(err.message);
-  }
-  console.log('Connected to the in-memory SQlite database.');
-});
 
 const getSymbolFromCurrency = require("currency-symbol-map");
 
 const { getCryptoPrice } = require("./helpers/getCryptoPrice");
 const { createCryptoAlert } = require("./helpers/createCryptoAlert");
-
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}.`);
@@ -39,7 +30,7 @@ client.on("message", async (message) => {
 
     case "price":
       if (isNaN(args[0])) args.unshift(1);
-      if (args[2] === undefined) args[2] = 'USD';
+      if (args[2] === undefined) args[2] = "USD";
       const data = await getCryptoPrice(args[1], args[2].toLocaleLowerCase());
       message.reply(
         `${args[0]} ${data.symbol.toUpperCase()} => ${
@@ -51,7 +42,7 @@ client.on("message", async (message) => {
 
     case "alert":
       createCryptoAlert(args[0], args[1], args[2], message);
-      break;  
+      break;
   }
 });
-client.login(process.env.DEVELOPMENT_API);
+client.login(process.env.API);
