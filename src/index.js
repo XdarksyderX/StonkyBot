@@ -53,4 +53,4 @@ client.on("message", async (message) => {
       message.reply('Unkowed command, please see !help')
   }
 });
-client.login(config['discordToken']);
+client.login(config['discordToken'] || env.process.DJS_TOKEN);
