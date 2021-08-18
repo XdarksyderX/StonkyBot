@@ -1,4 +1,4 @@
-require("dotenv").config();
+const config = require('./config');
 
 const Discord = require("discord.js");
 const client = new Discord.Client({
@@ -53,4 +53,4 @@ client.on("message", async (message) => {
       message.reply('Unkowed command, please see !help')
   }
 });
-client.login('ODc3NTU2OTkxMDkzMDE0NjI5.YR0Wog.bIuGHyyT-_mWKEX0Dc26xELfP3g');
+client.login(config['discordToken']);

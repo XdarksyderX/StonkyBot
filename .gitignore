@@ -19,6 +19,10 @@
 nbproject
 Thumbs.db
 
+#Configuration
+config.json
+
+
 # Node modules
 /node_modules
 
