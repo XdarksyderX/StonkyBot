@@ -4,7 +4,8 @@ const Discord = require("discord.js");
 const client = new Discord.Client({
   intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES],
 });
-
+const format = require('format-number');
+const { createHelpMessage } = require('./helpers/createHelpMessage');
 
 const getSymbolFromCurrency = require("currency-symbol-map");
 
@@ -35,14 +36,21 @@ client.on("message", async (message) => {
       message.reply(
         `${args[0]} ${data.symbol.toUpperCase()} => ${
           getSymbolFromCurrency(args[2].toLocaleUpperCase()) ||
-          args[2].toLocaleUpperCase()
-        }${data.price * args[0]}`
+          '$'
+        }${format()(data.price * args[0])}    Price change: 1h  ${data.variancy['1h'] >= 0 ? ':green_circle:' : ':red_circle:'} ${data.variancy['1h']}%   |   24h  ${data.variancy['24h'] >= 0 ? ':green_circle:' : ':red_circle:'} ${data.variancy['24h']}% more info at https://coingecko.com/en/coins/${args[1]}`
       );
       break;
-
+        
     case "alert":
       createCryptoAlert(args[0], args[1], args[2], message);
       break;
+
+    case 'help':
+      message.reply(createHelpMessage());
+      break;
+
+    default:
+      message.reply('Unkowed command, please see !help')
   }
 });
-client.login('ODI3OTg4NjY4NTc2NDMyMTU4.YGjCiQ.4hd_LuORcRvrW4av-MvN_kYVyNo');
+client.login('ODc3NTU2OTkxMDkzMDE0NjI5.YR0Wog.bIuGHyyT-_mWKEX0Dc26xELfP3g');
