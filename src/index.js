@@ -63,4 +63,4 @@ client.on("message", async (message) => {
       message.reply('Unkowed command, please see <help')
   }
 });
-client.login("ODc3ODY5NjE4OTczMjYxODI0.YR45yw.sjL0HD_yhlsIR2rnuyZoWvPlIxw");
+client.login("");
