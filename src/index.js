@@ -1,4 +1,3 @@
-const config = require('./config');
 
 const Discord = require("discord.js");
 const client = new Discord.Client({
@@ -17,7 +16,7 @@ client.on("ready", () => {
 });
 
 client.on("message", async (message) => {
-  const prefix = "!";
+  const prefix = "<";
 
   if (message.content[0] !== prefix) return;
 
@@ -33,16 +32,27 @@ client.on("message", async (message) => {
       if (isNaN(args[0])) args.unshift(1);
       if (args[2] === undefined) args[2] = "USD";
       const data = await getCryptoPrice(args[1], args[2].toLocaleLowerCase());
-      message.reply(
-        `${args[0]} ${data.symbol.toUpperCase()} => ${
-          getSymbolFromCurrency(args[2].toLocaleUpperCase()) ||
-          '$'
-        }${format()(data.price * args[0])}    Price change: 1h  ${data.variancy['1h'] >= 0 ? ':green_circle:' : ':red_circle:'} ${data.variancy['1h']}%   |   24h  ${data.variancy['24h'] >= 0 ? ':green_circle:' : ':red_circle:'} ${data.variancy['24h']}% more info at https://coingecko.com/en/coins/${args[1]}`
-      );
+      try {
+        
+        message.reply(
+          `${args[0]} ${data.symbol.toUpperCase()} => ${
+            getSymbolFromCurrency(args[2].toLocaleUpperCase()) ||
+            '$'
+          }${format()(data.price * args[0])}    Price change: 1h  ${data.variancy['1h'] >= 0 ? ':green_circle:' : ':red_circle:'} ${data.variancy['1h']}%   |   24h  ${data.variancy['24h'] >= 0 ? ':green_circle:' : ':red_circle:'} ${data.variancy['24h']}% more info at https://coingecko.com/en/coins/${args[1]}`
+        );
+      } catch (err) {
+        message.reply('Was an error with this crypto')
+      }
       break;
         
     case "alert":
-      createCryptoAlert(args[0], args[1], args[2], message);
+      try {
+
+        createCryptoAlert(args[0], args[1], args[2], message);
+      }
+      catch (err) {
+        message.reply('Was an error creating the alert');
+      }
       break;
 
     case 'help':
@@ -50,7 +60,7 @@ client.on("message", async (message) => {
       break;
 
     default:
-      message.reply('Unkowed command, please see !help')
+      message.reply('Unkowed command, please see <help')
   }
 });
-client.login(config['discordToken'] || env.process.DJS_TOKEN);
+client.login("ODc3ODY5NjE4OTczMjYxODI0.YR45yw.sjL0HD_yhlsIR2rnuyZoWvPlIxw");
